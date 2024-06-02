@@ -1,4 +1,6 @@
+# For exploring and manipulating our dataset
 import pandas as pd
+# For splitting our dataset into testing and training sets
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
