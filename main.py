@@ -91,6 +91,14 @@ def predict_values(h, k, l, d_spacing, model, scaler):
     return prediction[0]
 
 # Get user input and predict
+'''
+h, l, and k are coordinates like x, y, and z starting at (0, 0, 0). 
+This program, however, takes the value of h, l, and k as ordinary values only for comparison.
+The idea is---different combinations of h, l, k values will train the model with the values only instead of a coordinate system.
+I am not quite sure how to implement the coordinate system, or how to code it. I strongly believe that there is a way to do so
+more efficiently, and still looking into it. 
+Implementation of a coordinate system may or may not result into a higher accuracy of lattice structure prediction and 2-theta value. 
+'''
 h = float(input("Enter the value for h: "))
 k = float(input("Enter the value for k: "))
 l = float(input("Enter the value for l: "))
