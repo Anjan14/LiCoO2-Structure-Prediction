@@ -22,6 +22,6 @@ def plot_correlation_heatmap(df):
 
 if __name__ == "__main__":
     file_path = 'D_Spacing_data.csv'
-    df = load_data(file_path)
+    df        = load_data(file_path)
     plot_pairplot(df)
     plot_correlation_heatmap(df)
