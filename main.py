@@ -27,16 +27,16 @@ y = df[['Li', 'Co', 'O', '2	θ']]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Scale the features
-scaler = StandardScaler()
+scaler         = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
+X_test_scaled  = scaler.transform(X_test)
 
 # Dictionary to store models and their names
 models = {
     'Linear Regression': LinearRegression(),
-    'Random Forest': RandomForestRegressor(random_state=42),
-    'XGBoost': XGBRegressor(random_state=42),
-    'Neural Network': MLPRegressor(max_iter=500, random_state=42)
+    'Random Forest'    : RandomForestRegressor(random_state=42),
+    'XGBoost'          : XGBRegressor(random_state=42),
+    'Neural Network'   : MLPRegressor(max_iter=500, random_state=42)
 }
 
 # Hyperparameter grids for tuning
@@ -46,14 +46,14 @@ param_grids = {
         'max_features': ['auto', 'sqrt', 'log2']
     },
     'XGBoost': {
-        'n_estimators': [50, 100, 200],
+        'n_estimators' : [50, 100, 200],
         'learning_rate': [0.01, 0.1, 0.2],
-        'max_depth': [3, 5, 7]
+        'max_depth'    : [3, 5, 7]
     },
     'Neural Network': {
         'hidden_layer_sizes': [(50, 50), (100, 100), (100, 50, 100)],
-        'activation': ['relu', 'tanh'],
-        'solver': ['adam', 'sgd']
+        'activation'        : ['relu', 'tanh'],
+        'solver'            : ['adam', 'sgd']
     }
 }
 
@@ -62,7 +62,7 @@ def train_and_evaluate(model_name, model, param_grid, X_train, y_train):
     if param_grid:
         grid_search = GridSearchCV(model, param_grid, cv=5, scoring='r2', n_jobs=-1)
         grid_search.fit(X_train, y_train)
-        best_model = grid_search.best_estimator_
+        best_model  = grid_search.best_estimator_
     else:
         best_model = model
         best_model.fit(X_train, y_train)
@@ -80,14 +80,14 @@ for name, model in models.items():
 
 # Choose the best model based on mean CV R2 score
 best_model_name = max(results, key=lambda name: results[name]['mean_cv_score'])
-best_model = results[best_model_name]['model']
+best_model      = results[best_model_name]['model']
 print(f'Best model: {best_model_name}')
 
 # Function to predict Li, Co, O, and 2θ for a given d - spacing
 def predict_values(h, k, l, d_spacing, model, scaler):
-    input_data = np.array([[h, k, l, d_spacing]])
+    input_data        = np.array([[h, k, l, d_spacing]])
     input_data_scaled = scaler.transform(input_data)
-    prediction = model.predict(input_data_scaled)
+    prediction        = model.predict(input_data_scaled)
     return prediction[0]
 
 # Get user input and predict
@@ -99,16 +99,16 @@ I am not quite sure how to implement the coordinate system, or how to code it. I
 more efficiently, and still looking into it. 
 Implementation of a coordinate system may or may not result into a higher accuracy of lattice structure prediction and 2-theta value. 
 '''
-h = float(input("Enter the value for h: "))
-k = float(input("Enter the value for k: "))
-l = float(input("Enter the value for l: "))
+h         = float(input("Enter the value for h: "))
+k         = float(input("Enter the value for k: "))
+l         = float(input("Enter the value for l: "))
 d_spacing = float(input("Enter the value for d - spacing: "))
 
 predicted_values = predict_values(h, k, l, d_spacing, best_model, scaler)
 print(f'Predicted values - Li: {predicted_values[0]:.4f}, Co: {predicted_values[1]:.4f}, O: {predicted_values[2]:.4f}, 2θ: {predicted_values[3]:.4f}')
 
 # Prediction when d_spacing is less than the first row
-d_spacing_less = df['d - spacing'].iloc[0] - 0.1
+d_spacing_less        = df['d - spacing'].iloc[0] - 0.1
 predicted_values_less = predict_values(h, k, l, d_spacing_less, best_model, scaler)
 print(f'Predicted values for d_spacing {d_spacing_less} - Li: {predicted_values_less[0]:.4f}, Co: {predicted_values_less[1]:.4f}, O: {predicted_values_less[2]:.4f}, 2θ: {predicted_values_less[3]:.4f}')
 
