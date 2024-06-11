@@ -73,10 +73,10 @@ def train_and_evaluate(model_name, model, param_grid, X_train, y_train):
 # Train and evaluate all models
 results = {}
 for name, model in models.items():
-    param_grid = param_grids.get(name, None)
+    param_grid     = param_grids.get(name, None)
     trained_model, mean_cv_score, std_cv_score = train_and_evaluate(name, model, param_grid, X_train_scaled, y_train)
     print(f'{name} - Mean CV R2: {mean_cv_score:.4f}, Std CV R2: {std_cv_score:.4f}')
-    results[name] = {'model': trained_model, 'mean_cv_score': mean_cv_score, 'std_cv_score': std_cv_score}
+    results[name]  = {'model': trained_model, 'mean_cv_score': mean_cv_score, 'std_cv_score': std_cv_score}
 
 # Choose the best model based on mean CV R2 score
 best_model_name = max(results, key=lambda name: results[name]['mean_cv_score'])
@@ -105,12 +105,14 @@ l         = float(input("Enter the value for l: "))
 d_spacing = float(input("Enter the value for d - spacing: "))
 
 predicted_values = predict_values(h, k, l, d_spacing, best_model, scaler)
-print(f'Predicted values - Li: {predicted_values[0]:.4f}, Co: {predicted_values[1]:.4f}, O: {predicted_values[2]:.4f}, 2θ: {predicted_values[3]:.4f}')
+print(f'Predicted values - Li: {predicted_values[0]:.4f}, Co: {predicted_values[1]:.4f}, 
+        O: {predicted_values[2]:.4f}, 2θ: {predicted_values[3]:.4f}')
 
 # Prediction when d_spacing is less than the first row
 d_spacing_less        = df['d - spacing'].iloc[0] - 0.1
 predicted_values_less = predict_values(h, k, l, d_spacing_less, best_model, scaler)
-print(f'Predicted values for d_spacing {d_spacing_less} - Li: {predicted_values_less[0]:.4f}, Co: {predicted_values_less[1]:.4f}, O: {predicted_values_less[2]:.4f}, 2θ: {predicted_values_less[3]:.4f}')
+print(f'Predicted values for d_spacing {d_spacing_less} - Li: {predicted_values_less[0]:.4f}, 
+        Co: {predicted_values_less[1]:.4f}, O: {predicted_values_less[2]:.4f}, 2θ: {predicted_values_less[3]:.4f}')
 
 # Visualization
 sns.pairplot(df[['d - spacing', '2	θ', 'Li', 'Co', 'O']])
@@ -118,6 +120,7 @@ plt.show()
 
 # Correlation heatmap
 plt.figure(figsize=(10, 8))
-sns.heatmap(df[['d - spacing', '2	θ', 'Li', 'Co', 'O']].corr(), annot=True, cmap='coolwarm', linewidths=0.5)
+sns.heatmap(df[['d - spacing', '2	θ', 'Li', 'Co', 'O']].corr(), 
+            annot=True, cmap='coolwarm', linewidths=0.5)
 plt.title('Correlation Heatmap')
 plt.show()
