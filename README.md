@@ -2,8 +2,6 @@
 
 Predicting different chemical structures of Lithium Cobalt Oxide from d-spacing or lattice spacing values from other variations of LiCoO2.
 
-![LiCoO2 Structure](https://example.com/path/to/animation.gif)
-
 ## Project Overview
 
 This project aims to find the different structures of LiCoO2 using various d-spacing values to determine the optimal structure for a particular type of battery based on specific needs.
